@@ -16,13 +16,11 @@ service postfix stop
 
 # "Setting file permissions for use of postfix"
 mkdir -p /var/spool/MailScanner/spamassassin/
-chown -R postfix:mtagroup /var/spool/MailScanner/spamassassin/
-chown -R postfix:"$Webuser" /var/spool/postfix/incoming/
-chown -R postfix:"$Webuser" /var/spool/postfix/hold
-chmod -R g+r /var/spool/postfix/hold
-chmod -R g+r /var/spool/postfix/incoming/
-chown -R postfix:postfix /var/spool/MailScanner/incoming
-chown -R postfix:postfix /var/spool/MailScanner/quarantine
+chown -R postfix:mtagroup /var/spool/MailScanner/
+
+chown postfix:postfix /var/spool/postfix/
+chown -R postfix:mtagroup /var/spool/postfix/{hold,incoming}
+chmod -R g+r /var/spool/postfix/{hold,incoming}
 
 # restart again to notice new permissions
 service postfix start
